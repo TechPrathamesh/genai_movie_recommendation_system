@@ -86,7 +86,7 @@ graph TD
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/TechPrathamesh/genai_movie_recommendation_system.git
+git clone https://github.com/prathameshmohod174/genai_movie_recommendation_system.git
 cd genai_movie_recommendation_system
 ```
 
@@ -102,9 +102,15 @@ GROQ_API_KEY=YOUR_GROQ_API_KEY
 ```
 
 4. Download required data files:
-- [Movie Metadata](https://example.com/movie_metadata_updated.csv)
-- [Ratings Data](https://grouplens.org/datasets/movielens/32m/)
-- [Movies Data](https://example.com/movies.csv)
+Download the zip from the link - [Dataset](https://grouplens.org/datasets/movielens/32m/)
+- Extract the the zip.
+- Copy the three files 
+   - movies.csv
+   - movie_metadata.csv
+   - ratings.csv
+   to the project directory.
+
+
 
 Place these files in the project root directory.
 
@@ -143,7 +149,7 @@ python app.py
 ## 📝 API Documentation
 
 ### Groq API Integration
-The system uses Groq API for GenAI features. Replace `YOUR_GROQ_API_KEY` in the `.env` file with your actual API key.
+The system uses Groq API for GenAI features. Replace `YOUR_GROQ_API_KEY` in the `.env`, `config.json` and `genai_enhancer.py` file with your actual API key.
 
 ### Endpoints
 - `/signup` - User registration
@@ -169,7 +175,7 @@ This license allows personal, non-commercial use only. Commercial use is strictl
 
 ## 👥 Authors
 
-- **Prathamesh Mohod** - *Initial work* - [GitHub Profile](https://github.com/TechPrathamesh)
+- **Prathamesh Mohod** - *Initial work* - [GitHub Profile](https://github.com/prathameshmohod174)
 
 ## 🙏 Acknowledgments
 
