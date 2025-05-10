@@ -47,7 +47,32 @@ graph LR
     F --> G[GenAI Enhancement]
 ```
 
-## 🛠️ Technical Stack
+### GenAI Integration Flow
+```mermaid
+graph TD
+    A[User Activity] --> B[Data Collection]
+    B --> C[Behavior Analysis]
+    C --> D[Pattern Recognition]
+    D --> E[Insight Generation]
+    
+    F[Movie Data] --> G[Content Analysis]
+    G --> H[Feature Extraction]
+    H --> I[Semantic Understanding]
+    
+    E --> J[Personalized Insights]
+    I --> J
+    J --> K[User Interface]
+    
+    subgraph "Groq API Integration"
+        L[API Request] --> M[LLM Processing]
+        M --> N[Response Generation]
+    end
+    
+    C --> L
+    N --> E
+```
+
+## ��️ Technical Stack
 
 - **Backend**: Python, Flask
 - **Database**: SQLite with SQLAlchemy
