@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Favorite Genres</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('recommend') }}">Home</a>
+            <a href="{{ url_for('view_behavior') }}">My Behavior</a>
+            <a href="{{ url_for('view_genres') }}">My Genres</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Select Your Favorite Genres</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('select_genres') }}" class="genre-form">
+            <div class="genre-grid">
+                {% for genre in available_genres %}
+                    <div class="genre-item">
+                        <input type="checkbox" id="genre_{{ genre }}" name="genres" value="{{ genre }}" 
+                               {% if genre in selected_genres %}checked{% endif %}>
+                        <label for="genre_{{ genre }}">{{ genre }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Preferences</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html> 

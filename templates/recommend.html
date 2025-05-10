@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Your Movie Recommendations</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    {% if recommendations %}
+        <div class="row">
+            {% for movie in recommendations %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text">
+                                <strong>Year:</strong> {{ movie.year if movie.year else 'Unknown' }}<br>
+                                <strong>Genres:</strong> {{ movie.genres }}<br>
+                                {% if movie.final_score is defined %}
+                                <strong>Score:</strong> {{ "%.2f"|format(movie.final_score) }}<br>
+                                {% endif %}
+                                {% if movie.source %}
+                                <strong>Source:</strong> {{ movie.source }}<br>
+                                {% endif %}
+                                {% if movie.ai_insight %}
+                                <strong>AI Insight:</strong> {{ movie.ai_insight }}
+                                {% endif %}
+                            </p>
+                            <div class="btn-group">
+                                <a href="{{ url_for('rate_movie', movie_id=movie.movieId) }}" class="btn btn-primary">Rate</a>
+                                <a href="{{ url_for('watch_movie', movie_id=movie.movieId) }}" class="btn btn-success">Watch</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            No recommendations available. Please try rating some movies first.
+        </div>
+    {% endif %}
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('view_behavior') }}" class="btn btn-info">
+            <i class="fas fa-history"></i> View My Activity
+        </a>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>My Activity</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <!-- GenAI Insights Section -->
+    {% if analysis and analysis.genai_analysis %}
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">AI-Powered Insights</h4>
+        </div>
+        <div class="card-body">
+            {% if analysis.genai_analysis.watching_patterns %}
+            <div class="mb-3">
+                <h5>Watching Patterns</h5>
+                <p>{{ analysis.genai_analysis.watching_patterns }}</p>
+            </div>
+            {% endif %}
+            
+            {% if analysis.genai_analysis.preference_insights %}
+            <div class="mb-3">
+                <h5>Preference Insights</h5>
+                <p>{{ analysis.genai_analysis.preference_insights }}</p>
+            </div>
+            {% endif %}
+            
+            {% if analysis.genai_analysis.genre_suggestions %}
+            <div class="mb-3">
+                <h5>Genre Suggestions</h5>
+                <p>{{ analysis.genai_analysis.genre_suggestions }}</p>
+            </div>
+            {% endif %}
+            
+            {% if analysis.genai_analysis.improvement_recommendations %}
+            <div class="mb-3">
+                <h5>Recommendations</h5>
+                <p>{{ analysis.genai_analysis.improvement_recommendations }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Activity History Section -->
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0">Activity History</h4>
+        </div>
+        <div class="card-body">
+            {% if behaviors %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Movie</th>
+                                <th>Action</th>
+                                <th>Rating</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for behavior in behaviors %}
+                                <tr>
+                                    <td>{{ behavior.movie_title }}</td>
+                                    <td>
+                                        {% if behavior.action == 'rate' %}
+                                            <i class="fas fa-star text-warning"></i> Rated
+                                        {% else %}
+                                            <i class="fas fa-eye text-success"></i> Watched
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if behavior.rating %}
+                                            {{ "%.1f"|format(behavior.rating) }}/5.0
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ behavior.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    No activity recorded yet. Start by rating or watching some movies!
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{{ url_for('recommend') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Back to Recommendations
+        </a>
+    </div>
+</div>
+{% endblock %} 

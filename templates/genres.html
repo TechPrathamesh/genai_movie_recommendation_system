@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Genres</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .genre-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .genre-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .genre-item input {
+            margin-right: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Your Favorite Genres</h1>
+    <form method="POST">
+        <div class="genre-grid">
+            {% for genre in genres %}
+            <div class="genre-item">
+                <input type="checkbox" name="genres" value="{{ genre }}" id="genre_{{ genre }}">
+                <label for="genre_{{ genre }}">{{ genre|title }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Save Preferences</button>
+    </form>
+</body>
+</html> 
