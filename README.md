@@ -72,6 +72,89 @@ graph TD
     N --> E
 ```
 
+### Project flow
+```mermaid
+flowchart TD
+    Start([Start]) --> Init[Initialize HybridRecommender]
+    
+    subgraph Initialization
+        Init --> ValidateData{Validate Metadata}
+        ValidateData -->|Invalid| Error[Raise Error]
+        ValidateData -->|Valid| CopyData[Copy Metadata DataFrame]
+        CopyData --> CalcPopScores[Calculate Popularity Scores]
+    end
+    
+    subgraph GetRecommendations
+        GetRecs[Get Recommendations] --> InputParams{Check Input Parameters}
+        InputParams -->|Invalid| ReturnEmpty[Return Empty List]
+        InputParams -->|Valid| GetContent[Get Content-Based Recommendations]
+        InputParams -->|Valid| GetPopular[Get Popularity-Based Recommendations]
+    end
+    
+    subgraph ContentBasedFiltering
+        GetContent --> CheckMetadata{Check Metadata}
+        CheckMetadata -->|Empty| ReturnEmpty
+        CheckMetadata -->|Valid| FilterGenres[Filter by User Genres]
+        FilterGenres --> CalcGenreMatch[Calculate Genre Match Score]
+        CalcGenreMatch --> CalcContentScore[Calculate Content Score]
+        CalcContentScore --> SortContent[Sort by Content Score]
+        SortContent --> GetTopContent[Get Top K Recommendations]
+    end
+    
+    subgraph PopularityBasedFiltering
+        GetPopular --> CheckMetadata2{Check Metadata}
+        CheckMetadata2 -->|Empty| ReturnEmpty
+        CheckMetadata2 -->|Valid| SortPop[Sort by Popularity Score]
+        SortPop --> GetTopPop[Get Top K Recommendations]
+    end
+    
+    subgraph Diversification
+        GetTopContent --> Diversify[Diversify Recommendations]
+        GetTopPop --> Diversify
+        Diversify --> RemoveRated[Remove Rated Movies]
+        RemoveRated --> Randomize[Add Randomization to Scores]
+        Randomize --> Combine[Combine Recommendations]
+        
+        Combine -->|60% Weight| ContentWeight[Content-Based Weight]
+        Combine -->|40% Weight| PopWeight[Popularity Weight]
+        
+        ContentWeight --> SortFinal[Sort by Final Score]
+        PopWeight --> SortFinal
+        
+        SortFinal --> EnsureDiversity[Ensure Genre Diversity]
+        EnsureDiversity --> Shuffle[Shuffle Final Recommendations]
+    end
+    
+    subgraph GenAIEnhancement
+        Shuffle --> CheckProfile{Check User Profile}
+        CheckProfile -->|Available| Enhance[Enhance with GenAI]
+        CheckProfile -->|Not Available| SkipEnhance[Skip Enhancement]
+        Enhance --> FinalRecs[Final Recommendations]
+        SkipEnhance --> FinalRecs
+    end
+    
+    subgraph PopularityScoreCalculation
+        CalcPopScores --> CheckIMDB{Check IMDB Data}
+        CheckIMDB -->|Available| CalcIMDB[Calculate IMDB-based Score]
+        CheckIMDB -->|Not Available| CalcSimple[Calculate Simple Score]
+        CalcIMDB --> Normalize[Normalize Scores]
+        CalcSimple --> Normalize
+    end
+    
+    FinalRecs --> End([End])
+    ReturnEmpty --> End
+    
+    classDef process fill:#f9f,stroke:#333,stroke-width:2px
+    classDef decision fill:#bbf,stroke:#333,stroke-width:2px
+    classDef error fill:#fbb,stroke:#333,stroke-width:2px
+    classDef start_end fill:#bfb,stroke:#333,stroke-width:2px
+    
+    class Start,End start_end
+    class ValidateData,InputParams,CheckMetadata,CheckMetadata2,CheckIMDB,CheckProfile decision
+    class Error,ReturnEmpty error
+    class Init,GetRecs,GetContent,GetPopular,Diversify,Enhance process
+```
+
 ## 🔄 Technical Stack
 
 - **Backend**: Python, Flask
