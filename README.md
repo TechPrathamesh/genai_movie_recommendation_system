@@ -72,7 +72,7 @@ graph TD
     N --> E
 ```
 
-## ��️ Technical Stack
+## 🔄 Technical Stack
 
 - **Backend**: Python, Flask
 - **Database**: SQLite with SQLAlchemy
@@ -103,7 +103,7 @@ GROQ_API_KEY=YOUR_GROQ_API_KEY
 
 4. Download required data files:
 - [Movie Metadata](https://example.com/movie_metadata_updated.csv)
-- [Ratings Data](https://example.com/ratings.csv)
+- [Ratings Data](https://grouplens.org/datasets/movielens/32m/)
 - [Movies Data](https://example.com/movies.csv)
 
 Place these files in the project root directory.
@@ -122,22 +122,6 @@ python app.py
 
 3. Access the application at: http://localhost:5000
 
-## 📈 Results and Performance
-
-### Recommendation Accuracy
-- Hybrid approach achieved 85% accuracy in matching user preferences
-- Content-based filtering showed 75% relevance
-- Collaborative filtering achieved 80% accuracy
-
-### User Engagement
-- 40% increase in user movie ratings
-- 35% improvement in user retention
-- 50% higher click-through rate on recommendations
-
-### GenAI Insights
-- 90% accuracy in genre preference prediction
-- 85% relevance in behavior analysis
-- 80% user satisfaction with AI-generated insights
 
 ## 🔄 Project Flow
 
@@ -180,11 +164,12 @@ The system uses Groq API for GenAI features. Replace `YOUR_GROQ_API_KEY` in the 
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Personal Use License - see the [LICENSE](LICENSE) file for details.
+This license allows personal, non-commercial use only. Commercial use is strictly prohibited.
 
 ## 👥 Authors
 
-- **TechPrathamesh** - *Initial work* - [GitHub Profile](https://github.com/TechPrathamesh)
+- **Prathamesh Mohod** - *Initial work* - [GitHub Profile](https://github.com/TechPrathamesh)
 
 ## 🙏 Acknowledgments
 
